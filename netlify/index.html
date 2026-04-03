@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PDF Studio — Split, Merge, Convert &amp; Edit PDFs Free</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -34,7 +37,7 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter',Roboto,sans-serif;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
   background:var(--bg-grad); background-attachment:fixed; min-height:100vh;
   color:var(--text); transition:color .3s;
 }
@@ -272,12 +275,489 @@ footer strong{color:var(--text-m)}
   .tabs{padding:10px}
   .tab-btn{padding:7px 12px;font-size:.78rem}
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   PREMIUM HERO — full-screen immersive landing
+══════════════════════════════════════════════════════════════════ */
+@property --ga { syntax:'<angle>'; inherits:false; initial-value:0deg; }
+@keyframes rotateBorderGlow { to { --ga:360deg; } }
+
+#hero-landing {
+  position:relative; overflow:hidden;
+  min-height:100vh;
+  display:flex; flex-direction:column; align-items:center;
+  background:#06040f;
+  padding-bottom:80px;
+}
+/* Layered glow orbs */
+#hero-landing .orbs {
+  position:absolute; inset:0; pointer-events:none; z-index:0;
+}
+#hero-landing .orbs::before {
+  content:''; position:absolute;
+  width:900px; height:900px; top:-200px; left:-200px;
+  background:radial-gradient(circle, rgba(99,102,241,.22) 0%, transparent 65%);
+  filter:blur(60px); animation:orbA 22s ease-in-out infinite alternate;
+}
+#hero-landing .orbs::after {
+  content:''; position:absolute;
+  width:700px; height:700px; bottom:-150px; right:-100px;
+  background:radial-gradient(circle, rgba(139,92,246,.18) 0%, transparent 65%);
+  filter:blur(55px); animation:orbA 26s ease-in-out infinite alternate-reverse;
+}
+.orb-mid {
+  position:absolute;
+  width:500px; height:500px; top:40%; left:55%;
+  background:radial-gradient(circle, rgba(236,72,153,.13) 0%, transparent 65%);
+  filter:blur(50px); pointer-events:none; z-index:0;
+  animation:orbA 19s ease-in-out infinite alternate;
+}
+@keyframes orbA {
+  0%  { transform:translate(0,0) scale(1); }
+  40% { transform:translate(40px,-30px) scale(1.08); }
+  70% { transform:translate(-25px,20px) scale(.94); }
+  100%{ transform:translate(20px,35px) scale(1.05); }
+}
+/* Grid dot texture */
+.hero-grid-bg {
+  position:absolute; inset:0; pointer-events:none; z-index:0;
+  background-image:radial-gradient(rgba(255,255,255,.045) 1px, transparent 1px);
+  background-size:32px 32px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+}
+/* Mouse spotlight */
+.hero-spotlight {
+  position:absolute; inset:0; pointer-events:none; z-index:1;
+  background:radial-gradient(700px circle at var(--smx,50%) var(--smy,35%),
+    rgba(99,102,241,.1), transparent 70%);
+}
+
+/* ── NAV ──────────────────────────────────────────────────────────── */
+.hl-nav {
+  position:relative; z-index:10; width:100%; max-width:1120px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:28px 24px 0;
+}
+.hl-brand {
+  display:flex; align-items:center; gap:11px;
+  text-decoration:none;
+}
+.hl-brand-icon {
+  width:40px; height:40px; border-radius:11px;
+  background:linear-gradient(135deg,#6366f1,#8b5cf6);
+  display:flex; align-items:center; justify-content:center;
+  font-size:19px; box-shadow:0 4px 18px rgba(99,102,241,.5);
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.hl-brand:hover .hl-brand-icon { transform:rotate(-10deg) scale(1.1); }
+.hl-brand-name {
+  font-size:1.05rem; font-weight:900; letter-spacing:-.03em; color:#fff;
+}
+.hl-brand-name span {
+  background:linear-gradient(135deg,#a78bfa,#60a5fa);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.hl-nav-right { display:flex; align-items:center; gap:8px; }
+.hl-nav-btn {
+  padding:8px 18px; border-radius:9px; font-size:.78rem; font-weight:700;
+  border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.05);
+  color:rgba(255,255,255,.7); cursor:pointer; transition:all .22s;
+  backdrop-filter:blur(12px);
+}
+.hl-nav-btn:hover { background:rgba(255,255,255,.1); color:#fff; border-color:rgba(255,255,255,.2); }
+.hl-nav-btn-cta {
+  background:linear-gradient(135deg,#6366f1,#8b5cf6);
+  color:#fff; border-color:transparent;
+  box-shadow:0 4px 14px rgba(99,102,241,.4);
+}
+.hl-nav-btn-cta:hover { transform:translateY(-1px); box-shadow:0 6px 22px rgba(99,102,241,.55); }
+.hl-theme-group {
+  display:flex; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1);
+  border-radius:9px; overflow:hidden;
+}
+.hl-theme-btn {
+  padding:7px 13px; font-size:.75rem; font-weight:700;
+  border:none; background:transparent; color:rgba(255,255,255,.45);
+  cursor:pointer; transition:all .2s;
+}
+.hl-theme-btn.active {
+  background:linear-gradient(135deg,#6366f1,#8b5cf6); color:#fff;
+}
+
+/* ── HERO COPY ────────────────────────────────────────────────────── */
+.hl-hero {
+  position:relative; z-index:5;
+  text-align:center; max-width:780px;
+  margin:72px auto 0; padding:0 24px;
+}
+.hl-pill {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:5px 16px 5px 6px; border-radius:40px;
+  background:rgba(99,102,241,.12); border:1px solid rgba(99,102,241,.28);
+  font-size:.72rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  color:#a5b4fc; margin-bottom:26px;
+  animation:fadeUp .6s ease both;
+}
+.hl-pill-dot {
+  width:22px; height:22px; border-radius:50%;
+  background:linear-gradient(135deg,#6366f1,#8b5cf6);
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; box-shadow:0 2px 8px rgba(99,102,241,.5);
+  animation:scalePulse 2.5s ease-in-out infinite;
+}
+@keyframes scalePulse { 0%,100%{transform:scale(1)} 50%{transform:scale(.85);opacity:.7} }
+
+.hl-h1 {
+  font-size:clamp(2.6rem,6.5vw,5rem);
+  font-weight:900; letter-spacing:-.045em; line-height:1.04;
+  color:#fff; text-wrap:balance;
+  animation:fadeUp .65s .07s ease both;
+}
+.hl-h1 .g1 {
+  background:linear-gradient(135deg,#c4b5fd 0%,#93c5fd 50%,#f9a8d4 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.hl-sub {
+  font-size:clamp(.95rem,1.6vw,1.15rem); font-weight:400;
+  color:rgba(255,255,255,.48); line-height:1.68;
+  max-width:520px; margin:20px auto 0;
+  animation:fadeUp .65s .14s ease both;
+}
+.hl-ctas {
+  display:flex; align-items:center; justify-content:center;
+  gap:12px; flex-wrap:wrap; margin-top:36px;
+  animation:fadeUp .65s .21s ease both;
+}
+.hl-cta-primary {
+  display:inline-flex; align-items:center; gap:9px;
+  padding:15px 30px; border-radius:13px; font-size:.93rem; font-weight:700;
+  background:linear-gradient(135deg,#6366f1,#8b5cf6); color:#fff; border:none;
+  box-shadow:0 6px 24px rgba(99,102,241,.45), inset 0 1px 0 rgba(255,255,255,.15);
+  cursor:pointer; transition:all .28s cubic-bezier(.34,1.56,.64,1);
+}
+.hl-cta-primary:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 12px 36px rgba(99,102,241,.6), inset 0 1px 0 rgba(255,255,255,.15); }
+.hl-cta-secondary {
+  display:inline-flex; align-items:center; gap:9px;
+  padding:14px 26px; border-radius:13px; font-size:.93rem; font-weight:700;
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.13);
+  color:rgba(255,255,255,.8); cursor:pointer; backdrop-filter:blur(10px);
+  transition:all .25s;
+}
+.hl-cta-secondary:hover { background:rgba(255,255,255,.12); color:#fff; transform:translateY(-2px); }
+.hl-trust {
+  display:flex; align-items:center; justify-content:center;
+  gap:22px; flex-wrap:wrap; margin-top:22px;
+  font-size:.73rem; font-weight:600; color:rgba(255,255,255,.3);
+  animation:fadeUp .65s .28s ease both;
+}
+.hl-trust-item { display:flex; align-items:center; gap:5px; }
+.hl-trust-item .ti-dot {
+  width:5px; height:5px; border-radius:50%;
+  background:rgba(99,102,241,.7);
+}
+
+/* ── BENTO GRID ───────────────────────────────────────────────────── */
+.hl-bento-wrap {
+  position:relative; z-index:5;
+  width:100%; max-width:1120px;
+  padding:0 24px;
+  margin:64px auto 0;
+  animation:fadeUp .7s .35s ease both;
+}
+.hl-bento-eyebrow {
+  text-align:center; font-size:.68rem; font-weight:700; letter-spacing:.12em;
+  text-transform:uppercase; color:rgba(255,255,255,.2); margin-bottom:18px;
+  display:flex; align-items:center; justify-content:center; gap:12px;
+}
+.hl-bento-eyebrow::before,.hl-bento-eyebrow::after {
+  content:''; flex:1; height:1px; background:rgba(255,255,255,.08);
+}
+.hl-bento {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+@media(max-width:860px){ .hl-bento{ grid-template-columns:repeat(2,1fr); } }
+@media(max-width:480px){ .hl-bento{ grid-template-columns:repeat(2,1fr); gap:10px; } }
+
+.bt-card {
+  position:relative; overflow:hidden;
+  background:rgba(255,255,255,.038);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:22px;
+  padding:26px 22px 22px;
+  cursor:pointer; user-select:none;
+  transition:all .3s cubic-bezier(.34,1.56,.64,1);
+  display:flex; flex-direction:column; gap:14px;
+  --cx:50%; --cy:50%;
+}
+/* Per-card spotlight */
+.bt-card::before {
+  content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:0;
+  background:radial-gradient(180px circle at var(--cx) var(--cy),
+    rgba(255,255,255,.06), transparent 70%);
+  opacity:0; transition:opacity .35s;
+}
+.bt-card:hover::before { opacity:1; }
+/* Shimmer sweep on hover */
+.bt-card::after {
+  content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:0;
+  background:linear-gradient(110deg, transparent 30%, rgba(255,255,255,.05) 50%, transparent 70%);
+  transform:translateX(-130%);
+  transition:transform .6s ease;
+}
+.bt-card:hover::after { transform:translateX(130%); }
+.bt-card:hover {
+  border-color:rgba(255,255,255,.17);
+  transform:translateY(-6px) scale(1.025);
+  box-shadow:0 24px 48px rgba(0,0,0,.38), 0 0 0 1px rgba(99,102,241,.22);
+  background:rgba(255,255,255,.06);
+}
+.bt-card:active { transform:translateY(-2px) scale(.99); transition-duration:.1s; }
+
+/* Featured "large" first card */
+.bt-card.bt-feat {
+  grid-column:span 2;
+  flex-direction:row; align-items:flex-start; gap:22px;
+  padding:30px 28px;
+}
+@media(max-width:480px){ .bt-card.bt-feat{ grid-column:span 2; flex-direction:column; } }
+
+.bt-icon {
+  width:52px; height:52px; border-radius:16px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:24px;
+  position:relative; z-index:1;
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1);
+}
+.bt-card:hover .bt-icon { transform:scale(1.18) rotate(-8deg); }
+.bt-card.bt-feat .bt-icon { width:60px; height:60px; border-radius:18px; font-size:28px; }
+
+.bt-body { position:relative; z-index:1; flex:1; }
+.bt-name { font-size:.9rem; font-weight:800; color:#fff; line-height:1.2; margin-bottom:6px; }
+.bt-card.bt-feat .bt-name { font-size:1.1rem; }
+.bt-desc { font-size:.73rem; color:rgba(255,255,255,.38); line-height:1.5; }
+.bt-card.bt-feat .bt-desc { font-size:.83rem; color:rgba(255,255,255,.45); }
+.bt-arrow {
+  font-size:.78rem; color:rgba(255,255,255,.2); font-weight:700;
+  display:flex; align-items:center; gap:5px; margin-top:auto;
+  transition:all .22s; position:relative; z-index:1;
+  padding-top:12px;
+}
+.bt-card:hover .bt-arrow { color:rgba(255,255,255,.65); transform:translateX(5px); }
+.bt-badge {
+  display:inline-block; font-size:.63rem; font-weight:800; letter-spacing:.04em;
+  text-transform:uppercase; padding:2px 9px; border-radius:20px;
+  background:linear-gradient(135deg,rgba(99,102,241,.3),rgba(139,92,246,.3));
+  border:1px solid rgba(99,102,241,.35); color:#a5b4fc;
+  margin-bottom:8px; width:fit-content; position:relative; z-index:1;
+}
+
+/* Icon colour skins */
+.ic-split  { background:linear-gradient(135deg,rgba(99,102,241,.4),rgba(79,70,229,.6));  box-shadow:0 6px 20px rgba(99,102,241,.35); }
+.ic-merge  { background:linear-gradient(135deg,rgba(139,92,246,.4),rgba(109,40,217,.6)); box-shadow:0 6px 20px rgba(139,92,246,.35); }
+.ic-comp   { background:linear-gradient(135deg,rgba(16,185,129,.35),rgba(5,150,105,.55));box-shadow:0 6px 20px rgba(16,185,129,.3); }
+.ic-img    { background:linear-gradient(135deg,rgba(245,158,11,.35),rgba(217,119,6,.55));box-shadow:0 6px 20px rgba(245,158,11,.3); }
+.ic-wm     { background:linear-gradient(135deg,rgba(59,130,246,.35),rgba(37,99,235,.55));box-shadow:0 6px 20px rgba(59,130,246,.3); }
+.ic-pn     { background:linear-gradient(135deg,rgba(236,72,153,.35),rgba(190,24,93,.55));box-shadow:0 6px 20px rgba(236,72,153,.3); }
+.ic-prot   { background:linear-gradient(135deg,rgba(239,68,68,.35),rgba(185,28,28,.55)); box-shadow:0 6px 20px rgba(239,68,68,.3); }
+.ic-unlock { background:linear-gradient(135deg,rgba(52,211,153,.35),rgba(16,185,129,.55));box-shadow:0 6px 20px rgba(52,211,153,.3);}
+
+/* ── SCROLL CARET ─────────────────────────────────────────────────── */
+.hl-scroll {
+  position:relative; z-index:5;
+  margin-top:60px; display:flex; flex-direction:column; align-items:center; gap:10px;
+  animation:fadeUp .65s .5s ease both;
+}
+.hl-scroll-line {
+  width:1px; height:44px;
+  background:linear-gradient(to bottom,rgba(99,102,241,.7),transparent);
+  animation:scrollBob 2.2s ease-in-out infinite;
+}
+.hl-scroll-txt { font-size:.63rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.2); }
+@keyframes scrollBob { 0%,100%{opacity:.5;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.2)} }
+
+/* ── SHARED ANIM ──────────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(24px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ── TOOL APP WRAPPER ─────────────────────────────────────────────── */
+#tool-app { padding-top:8px; }
+
+/* ── DARK THEME ADJUSTMENTS FOR HERO ─────────────────────────────── */
+[data-theme="dark"] #hero-landing { background:#03020a; }
+[data-theme="light"] #hero-landing {
+  background:linear-gradient(145deg,#0f0c29,#302b63,#24243e);
+}
+
+@media(max-width:640px){
+  .hl-nav { padding:18px 16px 0; }
+  .hl-hero { margin-top:48px; }
+  .hl-bento-wrap { padding:0 12px; }
+  .hl-bento { gap:10px; }
+  .bt-card { padding:18px 16px 16px; border-radius:16px; }
+  .bt-card.bt-feat { padding:20px 18px; }
+  .bt-icon { width:42px; height:42px; font-size:20px; border-radius:13px; }
+}
 </style>
 </head>
 <body>
 <div id="app">
 
-<!-- HEADER -->
+<!-- ══ HERO LANDING ══════════════════════════════════════════════ -->
+<section id="hero-landing">
+  <div class="orbs"></div>
+  <div class="orb-mid"></div>
+  <div class="hero-grid-bg"></div>
+  <div class="hero-spotlight" id="spotlight"></div>
+
+  <!-- Nav -->
+  <nav class="hl-nav">
+    <a class="hl-brand" href="#" onclick="scrollToTools();return false;">
+      <div class="hl-brand-icon">📄</div>
+      <span class="hl-brand-name">PDF <span>Studio</span></span>
+    </a>
+    <div class="hl-nav-right">
+      <div class="hl-theme-group">
+        <button class="hl-theme-btn active" id="btnLight" onclick="setTheme('light')" title="Light">☀️</button>
+        <button class="hl-theme-btn" id="btnDark" onclick="setTheme('dark')" title="Dark">🌙</button>
+      </div>
+      <button class="hl-nav-btn hl-nav-btn-cta" onclick="scrollToTools()">Open Tools ↗</button>
+    </div>
+  </nav>
+
+  <!-- Hero copy -->
+  <div class="hl-hero">
+    <div class="hl-pill">
+      <div class="hl-pill-dot">⚡</div>
+      100% free · runs in your browser
+    </div>
+    <h1 class="hl-h1">
+      The PDF toolkit<br>
+      <span class="g1">built for speed.</span>
+    </h1>
+    <p class="hl-sub">
+      Split, merge, compress, convert and protect PDFs — entirely in your browser.
+      Zero uploads. Zero servers. Zero limits.
+    </p>
+    <div class="hl-ctas">
+      <button class="hl-cta-primary" onclick="scrollToTools()">
+        ✂️ Start Splitting
+      </button>
+      <button class="hl-cta-secondary" onclick="scrollToTools('merge')">
+        🔗 Merge PDFs
+      </button>
+    </div>
+    <div class="hl-trust">
+      <span class="hl-trust-item"><span class="ti-dot"></span>Up to 1.5 GB</span>
+      <span class="hl-trust-item"><span class="ti-dot"></span>500 pages max</span>
+      <span class="hl-trust-item"><span class="ti-dot"></span>Private — files never leave your device</span>
+      <span class="hl-trust-item"><span class="ti-dot"></span>Works offline</span>
+    </div>
+  </div>
+
+  <!-- Bento tool grid -->
+  <div class="hl-bento-wrap">
+    <div class="hl-bento-eyebrow">8 powerful tools</div>
+    <div class="hl-bento">
+
+      <!-- Split — featured wide -->
+      <div class="bt-card bt-feat" onclick="scrollToTools('split')">
+        <div class="bt-icon ic-split">✂️</div>
+        <div class="bt-body">
+          <div class="bt-badge">Most popular</div>
+          <div class="bt-name">Split PDF</div>
+          <div class="bt-desc">Extract any page, reorder, rotate or delete pages visually before downloading. Drag-and-drop reorder.</div>
+          <div class="bt-arrow">Open tool →</div>
+        </div>
+      </div>
+
+      <!-- Merge — featured wide -->
+      <div class="bt-card bt-feat" onclick="scrollToTools('merge')">
+        <div class="bt-icon ic-merge">🔗</div>
+        <div class="bt-body">
+          <div class="bt-name">Merge PDFs</div>
+          <div class="bt-desc">Combine multiple PDFs into one file. Drag to reorder before merging. Blazing fast worker-based engine.</div>
+          <div class="bt-arrow">Open tool →</div>
+        </div>
+      </div>
+
+      <!-- Compress -->
+      <div class="bt-card" onclick="scrollToTools('compress')">
+        <div class="bt-icon ic-comp">🗜️</div>
+        <div class="bt-body">
+          <div class="bt-name">Compress</div>
+          <div class="bt-desc">Shrink PDFs by up to 80% with three quality levels.</div>
+          <div class="bt-arrow">Open →</div>
+        </div>
+      </div>
+
+      <!-- To Images -->
+      <div class="bt-card" onclick="scrollToTools('images')">
+        <div class="bt-icon ic-img">🖼️</div>
+        <div class="bt-body">
+          <div class="bt-name">PDF → Images</div>
+          <div class="bt-desc">Export every page as PNG or JPEG at up to 216 DPI.</div>
+          <div class="bt-arrow">Open →</div>
+        </div>
+      </div>
+
+      <!-- Watermark -->
+      <div class="bt-card" onclick="scrollToTools('watermark')">
+        <div class="bt-icon ic-wm">💧</div>
+        <div class="bt-body">
+          <div class="bt-name">Watermark</div>
+          <div class="bt-desc">Stamp text on every page — custom opacity, position &amp; color.</div>
+          <div class="bt-arrow">Open →</div>
+        </div>
+      </div>
+
+      <!-- Page Numbers -->
+      <div class="bt-card" onclick="scrollToTools('pagenums')">
+        <div class="bt-icon ic-pn">🔢</div>
+        <div class="bt-body">
+          <div class="bt-name">Page Numbers</div>
+          <div class="bt-desc">Add configurable page numbers in any position and format.</div>
+          <div class="bt-arrow">Open →</div>
+        </div>
+      </div>
+
+      <!-- Protect -->
+      <div class="bt-card" onclick="scrollToTools('protect')">
+        <div class="bt-icon ic-prot">🔒</div>
+        <div class="bt-body">
+          <div class="bt-name">Protect</div>
+          <div class="bt-desc">Password-encrypt PDFs with AES-128 in one click.</div>
+          <div class="bt-arrow">Open →</div>
+        </div>
+      </div>
+
+      <!-- Unlock -->
+      <div class="bt-card" onclick="scrollToTools('unlock')">
+        <div class="bt-icon ic-unlock">🔓</div>
+        <div class="bt-body">
+          <div class="bt-name">Unlock</div>
+          <div class="bt-desc">Remove password from any PDF you own instantly.</div>
+          <div class="bt-arrow">Open →</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scroll hint -->
+  <div class="hl-scroll" onclick="scrollToTools()">
+    <span class="hl-scroll-txt">Scroll to tools</span>
+    <div class="hl-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══ TOOL APP ══════════════════════════════════════════════════ -->
+<div id="tool-app" class="tool-app-anchor">
+<div id="app-inner">
+
+<!-- HEADER (compact inside tool app) -->
 <header>
   <div class="logo">
     <div class="logo-icon">📄</div>
@@ -287,26 +767,10 @@ footer strong{color:var(--text-m)}
     </div>
   </div>
   <div class="header-actions">
-    <button class="theme-btn active" id="btnLight" onclick="setTheme('light')">☀️ Light</button>
-    <button class="theme-btn" id="btnDark" onclick="setTheme('dark')">🌙 Dark</button>
+    <button class="theme-btn active" id="btnLightInner" onclick="setTheme('light')">☀️ Light</button>
+    <button class="theme-btn" id="btnDarkInner" onclick="setTheme('dark')">🌙 Dark</button>
   </div>
 </header>
-
-<!-- HERO -->
-<div class="hero">
-  <h2>All-in-One PDF Studio</h2>
-  <p>Split, merge, compress, convert and protect PDFs — entirely in your browser. No uploads, no servers, no limits.</p>
-  <div class="feature-grid">
-    <div class="feature-item"><div class="fi-icon">✂️</div><div class="fi-label">Split PDF</div></div>
-    <div class="feature-item"><div class="fi-icon">🔗</div><div class="fi-label">Merge PDFs</div></div>
-    <div class="feature-item"><div class="fi-icon">🗜️</div><div class="fi-label">Compress</div></div>
-    <div class="feature-item"><div class="fi-icon">🖼️</div><div class="fi-label">PDF → Images</div></div>
-    <div class="feature-item"><div class="fi-icon">🔏</div><div class="fi-label">Watermark</div></div>
-    <div class="feature-item"><div class="fi-icon">🔢</div><div class="fi-label">Page Numbers</div></div>
-    <div class="feature-item"><div class="fi-icon">🔒</div><div class="fi-label">Password Protect</div></div>
-    <div class="feature-item"><div class="fi-icon">🔓</div><div class="fi-label">Unlock PDF</div></div>
-  </div>
-</div>
 
 <!-- TABS -->
 <div class="tabs">
@@ -327,7 +791,7 @@ footer strong{color:var(--text-m)}
     <div class="drop-zone" id="dz-split" ondragover="dzOver(event,'split')" ondragleave="dzLeave('split')" ondrop="dzDrop(event,'split')">
       <span class="dz-icon">📂</span>
       <h4>Drop your PDF here</h4>
-      <p>or click to browse — max 200 MB</p>
+      <p>or click to browse — max 1.5 GB</p>
       <input type="file" id="fi-split" accept=".pdf" onchange="loadSplitFile(this.files[0])">
     </div>
   </div>
@@ -619,7 +1083,8 @@ footer strong{color:var(--text-m)}
   <span>Built with pdf-lib &amp; pdf.js · Open Source · Free Forever</span>
 </footer>
 
-</div><!-- /#app -->
+</div><!-- /#app-inner -->
+</div><!-- /#tool-app -->
 
 <div id="toast-container"></div>
 
@@ -846,7 +1311,7 @@ async function downloadZip(files,zipName){
 async function loadSplitFile(file){
   if(!file||S.busy)return;
   resetSplitState(); // BUG-3
-  if(file.size>200*1024*1024){toast('File too large (max 200 MB)','e');return;}
+  if(file.size>1536*1024*1024){toast('File too large (max 1.5 GB)','e');return;}
   toast('Loading PDF…','i',2000);
   const ab=await file.arrayBuffer();
   if(!(await validatePDF(ab))){toast('Invalid or corrupt PDF file','e');return;}// BUG-2
@@ -1307,6 +1772,52 @@ async function startUnlock(){
 // ── Init ─────────────────────────────────────────────────────────────
 setTheme(S.theme);
 onSplitModeChange();
+
+// ── HERO: mouse spotlight ─────────────────────────────────────────────
+(function(){
+  const hero=document.getElementById('hero-landing');
+  const sp=document.getElementById('spotlight');
+  if(!hero||!sp)return;
+  hero.addEventListener('mousemove',e=>{
+    const r=hero.getBoundingClientRect();
+    const x=((e.clientX-r.left)/r.width*100).toFixed(1)+'%';
+    const y=((e.clientY-r.top)/r.height*100).toFixed(1)+'%';
+    hero.style.setProperty('--smx',x);
+    hero.style.setProperty('--smy',y);
+  });
+  // Per-card inner spotlight
+  document.querySelectorAll('.bt-card').forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      card.style.setProperty('--cx',((e.clientX-r.left))+'px');
+      card.style.setProperty('--cy',((e.clientY-r.top))+'px');
+    });
+  });
+})();
+
+// ── Hero scroll-to-tools ──────────────────────────────────────────────
+function scrollToTools(tab){
+  if(tab)switchTab(tab);
+  const el=document.getElementById('tool-app');
+  if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ── Keep inner theme buttons in sync ─────────────────────────────────
+const _origSetTheme=setTheme;
+// patch already-defined setTheme to also sync inner buttons
+const __st=window.setTheme;
+window.setTheme=function(t){
+  __st(t);
+  ['btnLightInner','btnDarkInner'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.classList.toggle('active',(id==='btnLightInner'&&t==='light')||(id==='btnDarkInner'&&t==='dark'));
+  });
+  // also sync hero theme buttons
+  ['btnLight','btnDark'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.classList.toggle('active',(id==='btnLight'&&t==='light')||(id==='btnDark'&&t==='dark'));
+  });
+};
 </script>
 </body>
 </html>
