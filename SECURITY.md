@@ -53,6 +53,7 @@ PDF Studio runs **entirely in the user's browser**. There is no backend, no uplo
 - **Filename sanitization** strips path separators, control characters, and Windows-reserved names from every download.
 - **Password fields are cleared** from the DOM immediately after the encrypt/unlock operation completes.
 - **No `localStorage`, `sessionStorage`, `indexedDB`, or cookies.** Nothing about your PDFs persists across reloads.
+- **No analytics, telemetry, or tracking of any kind.** No third-party scripts beyond the PDF libraries themselves (which are SRI-locked).
 - **Magic-byte validation** (`%PDF-`) on every uploaded file in addition to the extension check.
 - **MIT-licensed source** — anyone can audit the entire app in a single 2,200-line `index.html`.
 
