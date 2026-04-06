@@ -1,4 +1,4 @@
-# PDFsnip
+# PDF Studio
 
 A free, open-source, **100% client-side** PDF toolkit. Eight PDF tools that run entirely in your browser — your files never leave your device.
 
@@ -51,7 +51,7 @@ That's the entire stack. No npm, no bundler, no node_modules.
 ## 📁 Project structure
 
 ```
-pdf-splitter/
+pdf-studio/
 ├── index.html       # The entire app
 ├── netlify.toml     # Static hosting config + security headers
 ├── tests.md         # Manual test plan
