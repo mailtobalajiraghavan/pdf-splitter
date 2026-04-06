@@ -6,6 +6,13 @@
 # Netlify CLI state
 .netlify/
 
+# Playwright MCP state
+.playwright-mcp/
+
+# Stale runtime folders from old Flask version
+uploads/
+output/
+
 # OS
 .DS_Store
 Thumbs.db
